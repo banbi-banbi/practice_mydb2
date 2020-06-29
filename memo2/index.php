@@ -17,7 +17,7 @@
 
 <main>
 <h2>Practice</h2>
-<pre>
+
 <?php
 try {
       $db = new PDO ('mysql:dbname=mydb2;host=127.0.0.1;charset=utf8','root','');
@@ -25,25 +25,36 @@ try {
       echo 'DB接続エラー：'.$e->getMessage();
 }
 
-// 【レッスン56】データ挿入
-// $count = $db->exec('INSERT INTO my_items SET maker_id=1, item_name="もも", price=210, keyword="件詰,ピンク,甘い"');
-// echo $count. '件のデータを挿入しました';
+$memos = $db->query('SELECT * FROM memos ORDER BY id DESC');
 
-// 【レッスン57】データ閲覧
-$records = $db->query('SELECT * FROM my_items');
-while($record = $records->fetch()) {
-  print($record['item_name']. "\n");
 
-  $recordの中の型とカラム名などの確認（独自）
-  while($record = $records->fetch()) {
-    var_dump($record);
-    echo('■■■■■■■■■■■■');
-  }
+// $records = $db->query('SELECT * FROM my_items');
+// while($record = $records->fetch()) {
+  //   print($record['item_name']. "\n");
   
-}
+  //   $recordの中の型とカラム名などの確認（独自）
+  //   while($record = $records->fetch()) {
+    //     var_dump($record);
+    //     echo('■■■■■■■■■■■■');
+    //   }
+    // }
+    
+    ?>
+    <article>
+      <?php while ($memo = $memos->fetch()): ?>
+        <!-- 文字数制限無し -->
+        <!-- <p><a href="#"><?php print($memo['memo']); ?></a></p> -->
+        <!-- 文字数制限あり -->
+        <!-- <p><a href="#"><?php print(mb_substr($memo['memo'], 0, 50)); ?></a></p> -->
+        <!-- 【61】リンク設定 -->
+        <p><a href="memo.php?id=<?php print($memo['id']); ?>"><?php print(mb_substr($memo['memo'], 0, 50)); ?></a></p>
 
-?>
-</pre>
+
+        <time><?php print($memo['created_at']); ?></time>
+        <hr>
+      <?php endwhile; ?>
+    </article>
+    
 </main>
 </body>    
 </html>
