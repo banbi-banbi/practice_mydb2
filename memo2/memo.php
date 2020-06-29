@@ -19,11 +19,7 @@
 <h2>Practice</h2>
 
 <?php
-try {
-      $db = new PDO ('mysql:dbname=mydb2;host=127.0.0.1;charset=utf8','root','');
-} catch (PDOException $e) {
-      echo 'DB接続エラー：'.$e->getMessage();
-}
+require('dbconnect.php');
 
 // パラメーターを数字だけに限定にする
 $id = $_REQUEST['id'];

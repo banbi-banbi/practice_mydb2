@@ -19,8 +19,7 @@
 <h2>Practice</h2>
 <pre>
   <?php
-  try {
-    $db = new PDO('mysql:dbname=mydb2;host=127.0.0.1;charset=utf8','root','');
+  require('dbconnect.php');
 
     // 危険な書き方（SQL文の中にPOSTを直接埋め込む）
     // $db->exec('INSERT INTO memos SET memo="'. $_POST['memo']. '", created_at=NOW()');
@@ -36,10 +35,6 @@
 
     // 共通
     echo 'メッセージが登録されました';
-
-  } catch (PDOException $e) {
-    echo 'DB接続エラー：'. $e->getMessage();
-  }
   ?>
 </pre>
 </main>
