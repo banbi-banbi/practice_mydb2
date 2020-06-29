@@ -20,8 +20,17 @@
 
 <?php
 require('dbconnect.php');
+if (isset($_REQUEST['page']) && is_numeric($_REQUEST['page'])) {
+  $page = $_REQUEST['page'];
+} else {
+  $page = 1;
+}
+$start = 5 * ($page - 1);
 
-$memos = $db->query('SELECT * FROM memos ORDER BY id DESC');
+$memos = $db->prepare('SELECT * FROM memos ORDER BY id DESC LIMIT ?, 5');
+$memos->bindParam(1, $start, PDO::PARAM_INT);
+$memos->execute();
+
 
 
 // $records = $db->query('SELECT * FROM my_items');
